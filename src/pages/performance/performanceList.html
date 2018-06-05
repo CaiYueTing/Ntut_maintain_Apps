@@ -1,0 +1,53 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>維修事項</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding text-center>
+    <ion-list *ngIf="logged">
+        <ion-item *ngFor="let maintain of maintains " [navPush]="performanceDetailPage" [navParams]="maintain.id">
+            <ion-grid >
+                <ion-row>
+                    <ion-col>
+                        <h2>{{ maintain.locate }}樓</h2>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-7>
+                        <p>需維修事項：{{ maintain.item }}</p>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-7 *ngIf="maintain.maintainState == 0">
+                        <p>維修狀態：尚未完成</p>
+                    </ion-col>
+                    <ion-col col-7 *ngIf="maintain.maintainState == 1">
+                        <p>維修狀態：處理中</p>
+                    </ion-col>
+                    <ion-col col-7 *ngIf="maintain.maintainState == 2">
+                        <p>維修狀態：已經完成</p>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-7 *ngIf="maintain.doneBy != '' ">
+                        <p>維修者：{{ maintain.doneBy }}</p>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+    </ion-list>
+    <div *ngIf="!logged" id="hint">
+        <ion-card text-left>
+            <ion-card-header>
+                <h1>歡迎使用</h1>
+            </ion-card-header>
+            <ion-card-content>
+                <p>《維修系統》管理App</p>
+                <p>請點擊【設定】選單</p>
+                <p>完成登入手續</p>
+                <p>以開啟管理功能</p>
+            </ion-card-content>
+        </ion-card>
+
+    </div>
+</ion-content>

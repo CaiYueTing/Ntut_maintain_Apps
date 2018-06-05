@@ -1,0 +1,32 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>成員管理</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding>
+    <ion-list inset *ngIf="logged">
+        <ion-item *ngFor="let admin of admins" [navPush]="memberDetailPage" [navParams]="admin.email">
+            <ion-avatar item-start>
+                <ion-icon name="contact" color="primary"></ion-icon>
+            </ion-avatar>
+            <h2>{{ admin.name }}</h2>
+            <p>{{ admin.phone }}</p>
+            <p>本月維修次數 : {{ admin.maintainCount }}</p>
+            <!-- <ion-note item-end>{{ (student.performance.actionState==1)?"實習中":"離線"</ion-note> }} -->
+        </ion-item>
+    </ion-list>
+
+    <div *ngIf="!logged" id="hint">
+        <ion-card>
+            <ion-card-header>
+                <h1>歡迎使用</h1>
+            </ion-card-header>
+            <ion-card-content>
+                <p>《維修系統》管理App</p>
+                <p>請點擊【設定】選單</p>
+                <p>完成登入手續</p>
+                <p>以開啟管理功能</p>
+            </ion-card-content>
+        </ion-card>
+    </div>
+</ion-content>

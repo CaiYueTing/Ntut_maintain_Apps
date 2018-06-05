@@ -1,0 +1,62 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>維修細項</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding text-center>
+    <ng-container *ngIf="maintain; else loading">
+        <ion-item text-center>
+            <img src="assets/imgs/icon.png">
+        </ion-item>
+        <ion-grid text-left class="performance">
+            <ion-row>
+                <ion-col col-4>單號</ion-col>
+                <ion-col col-8>{{ maintain.id }}</ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-4>地點</ion-col>
+                <ion-col col-8>{{ maintain.locate }}樓</ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-4>項目</ion-col>
+                <ion-col col-8>{{ maintain.item }}</ion-col>
+            </ion-row>
+            <br />
+            <ion-row>
+                <ion-col col-4>報修時間</ion-col>
+                <ion-col col-8>{{ maintain.time }}</ion-col>
+            </ion-row>
+            <br />
+            
+           
+            <ion-row *ngIf="mode == 'view'">
+                <ion-col col-4>承辦人員</ion-col>
+                <ion-col col-8>{{ maintain.doneBy || "尚未派人維修"}}</ion-col>
+            </ion-row>
+            <br />
+            <ion-row *ngIf="maintain.maintainState != 0">
+                    <ion-col col-4>維修狀態</ion-col>
+                    <ion-col col-8 *ngIf="maintain.maintainState==1">處理中，請稍後...</ion-col>
+                    <ion-col col-8 *ngIf="maintain.maintainState==2">已完成</ion-col>
+                </ion-row>
+            <br />
+        </ion-grid>
+        <button ion-button round *ngIf="mode == 'view' && maintain.maintainState != 2" (click)="toggleMode('modify')">維修狀態修改</button>
+
+            <ion-item text-center *ngIf="mode == 'modify'">
+                <ion-label color="primary">尚未維修</ion-label>
+                <ion-select type="string" [(ngModel)]="maintainState">
+                    <ion-option value="0">尚未維修</ion-option>
+                    <ion-option value="1">處理中</ion-option>
+                    <ion-option value="2">已經完成</ion-option>
+                </ion-select>
+                <!-- <ion-input type="number" [(ngModel)]="grade"></ion-input> -->
+            </ion-item>
+        <button ion-button round *ngIf="mode == 'modify'" (click)="setMaintain(maintain, maintainState)">修改</button>
+        <button ion-button round color="danger" *ngIf="mode == 'modify'" (click)="toggleMode('view')">取消</button>
+    </ng-container>
+    <ng-template #loading>
+        Loading...
+    </ng-template>
+</ion-content>

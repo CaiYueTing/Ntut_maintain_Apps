@@ -1,19 +1,20 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
-import { AboutPage } from '../about/about';
-import { ContactPage } from '../contact/contact';
-import { HomePage } from '../home/home';
+import { MemberListController } from '../member/memberList'
+import { PerformanceListController } from '../performance/performanceList'
+// import { ContactListController } from '../message/contactList'
+import { SettingController } from '../setting/setting'
 
 @Component({
-  templateUrl: 'tabs.html'
+    templateUrl: 'tabs.html'
 })
-export class TabsPage {
+export class TabsController {
 
-  tab1Root = HomePage;
-  tab2Root = AboutPage;
-  tab3Root = ContactPage;
+    memberListPage = MemberListController
+    performanceListPage = PerformanceListController
+    // contactListPage = ContactListController
+    settingPage = SettingController
 
-  constructor() {
-
-  }
+    constructor() { }
+    
 }

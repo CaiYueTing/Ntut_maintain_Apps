@@ -1,0 +1,46 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>員工資訊</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ng-container *ngIf="loginer && admin; else setting">
+        <ng-container *ngIf="admin.name == loginer.name || loginer.role == 'manager'; else loading">
+        <ion-item text-center>
+            <img src="assets/imgs/icon.png">
+        </ion-item>
+        <ion-grid class="profile">
+            <ion-row>
+                <ion-col col-3>姓名</ion-col>
+                <ion-col col-9>{{ admin.name }}</ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-5>員工編號</ion-col>
+                <ion-col col-6>{{ admin.id }}</ion-col>
+            </ion-row>
+            <br />
+            <ion-row>
+                <ion-col col-3>手機</ion-col>
+                <ion-col col-9>
+                    <a [href]="'tel:' + admin.phone">{{ admin.phone }}</a>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-3>Email</ion-col>
+                <ion-col col-9>
+                    <a [href]="'mailto:' + admin.email">{{ admin.email }}</a>
+                </ion-col>
+            </ion-row>
+            
+            <br />
+        </ion-grid>
+    </ng-container>
+    </ng-container>
+    <ng-template #loading>
+        您的權限不足  
+    </ng-template>
+    <ng-template #setting>
+         載入中...  
+    </ng-template>
+</ion-content>
