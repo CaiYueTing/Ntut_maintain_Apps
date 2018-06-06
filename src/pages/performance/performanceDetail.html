@@ -39,13 +39,15 @@
                     <ion-col col-4>維修狀態</ion-col>
                     <ion-col col-8 *ngIf="maintain.maintainState==1">處理中，請稍後...</ion-col>
                     <ion-col col-8 *ngIf="maintain.maintainState==2">已完成</ion-col>
-                </ion-row>
+            </ion-row>
             <br />
         </ion-grid>
         <button ion-button round *ngIf="mode == 'view' && maintain.maintainState != 2" (click)="toggleMode('modify')">維修狀態修改</button>
 
             <ion-item text-center *ngIf="mode == 'modify'">
-                <ion-label color="primary">尚未維修</ion-label>
+                <ion-label *ngIf="maintain.maintainState==0" color="primary">尚未維修</ion-label>
+                <ion-label *ngIf="maintain.maintainState==1" color="primary">處理中</ion-label>
+                <ion-label *ngIf="maintain.maintainState==2" color="primary">已完成</ion-label>
                 <ion-select type="string" [(ngModel)]="maintainState">
                     <ion-option value="0">尚未維修</ion-option>
                     <ion-option value="1">處理中</ion-option>
@@ -53,7 +55,7 @@
                 </ion-select>
                 <!-- <ion-input type="number" [(ngModel)]="grade"></ion-input> -->
             </ion-item>
-        <button ion-button round *ngIf="mode == 'modify'" (click)="setMaintain(maintain, maintainState)">修改</button>
+        <button ion-button round *ngIf="mode == 'modify'" (click)="setMaintain(maintain, maintainState, admin)">修改</button>
         <button ion-button round color="danger" *ngIf="mode == 'modify'" (click)="toggleMode('view')">取消</button>
     </ng-container>
     <ng-template #loading>

@@ -35,11 +35,12 @@ export class FirestoreService {
     }
 
     setMaintain(maintain: MaintainSheet): Promise<void> {
-        console.log(maintain)
-        console.log(this.maintainCollection.doc(maintain.id))
         return this.maintainCollection.doc(maintain.id).update(maintain)
     }
 
+    setAdmin(admin: Admin): Promise<void> {
+        return this.adminCollection.doc<Admin>(admin.email).update(admin)
+    }
     // setFcmToken(admin: Admin): Promise<void> {
     //     return this.adminCollection.doc<Admin>(admin.account).update({
     //         member: admin.member

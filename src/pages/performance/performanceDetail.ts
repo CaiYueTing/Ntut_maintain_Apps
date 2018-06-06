@@ -34,7 +34,7 @@ export class PerformanceDetailController implements OnDestroy {
         })
     }
 
-    setMaintain(maintain: MaintainSheet, maintainState: string) {
+    setMaintain(maintain: MaintainSheet, maintainState: string, admin: Admin) {
         this.alertCtrl.create({
             title: "更改狀態",
             message: "確認送出維修狀態？",
@@ -42,8 +42,26 @@ export class PerformanceDetailController implements OnDestroy {
                 {
                     text: "送出",
                     handler: () => {
-                        maintain.maintainState = maintainState
-                        this.firestoreService.setMaintain(maintain)
+                        
+                        if(maintainState == '2'){
+                            var maintainCount = Number(admin.maintainCount)
+                            var maintainTotal = Number(admin.maintainTotal)
+                            
+                            maintainCount = maintainCount+1                            
+                            maintainTotal = maintainTotal+1
+
+                            admin.maintainCount = maintainCount
+                            admin.maintainTotal = maintainTotal
+
+                            maintain.maintainState = maintainState
+                            maintain.doneBy = admin.name
+                            this.firestoreService.setMaintain(maintain)
+                            this.firestoreService.setAdmin(admin)
+                        }else{
+                            maintain.maintainState = maintainState
+                            maintain.doneBy = admin.name
+                            this.firestoreService.setMaintain(maintain)
+                        }                  
                         this.toggleMode("view")
                     }
                 },
