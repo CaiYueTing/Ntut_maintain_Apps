@@ -21,11 +21,15 @@ export class PerformanceListController implements OnDestroy {
     constructor(private firestoreService: FirestoreService, angularfireAuth: AngularFireAuth) {
         angularfireAuth.authState.subscribe(firebaseUser => {
             this.logged = !!firebaseUser
-            if (this.logged)
-                this.studentsSubscription = this.firestoreService.getMaintains().subscribe(maintains => this.maintains = maintains)
-            else
+            if (this.logged){
+                this.studentsSubscription = this.firestoreService.getMaintains().subscribe(maintains => this.maintains = maintains.sort(this.up))                
+            }else{
                 this.ngOnDestroy()
+            }
         })
+    }
+    up(x:MaintainSheet,y:MaintainSheet){
+        return Number(y.id) -Number(x.id)
     }
 
     ngOnDestroy() {
